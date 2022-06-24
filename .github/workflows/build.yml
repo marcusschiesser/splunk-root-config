@@ -1,0 +1,20 @@
+name: Create tarball and publish version tags as Github release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: tar czf splunk_root_config.tgz splunk_root_config
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: splunk_root_config.tgz
